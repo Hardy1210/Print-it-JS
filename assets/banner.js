@@ -1,4 +1,4 @@
-//fonction pour ajouter les images au html
+//On prend la classe de l'element qu'on veux inserer un autre element
 const banner = document.getElementById("banner")
 
 //on utilize le tableau slides 
@@ -14,8 +14,13 @@ slides.forEach(slide => {
     //qu'ira  auusi commen decendan de l'element banner
     const tagLine = document.createElement('p')
     tagLine.innerHTML = slide.tagLine
+    tagLine.classList.add('text')
+    
+    //tagLine.classList.add('banner-img')
+    
     //il faut cette propiete pour l'ajout du nouvelle element
     banner.appendChild(img)
+    banner.appendChild(tagLine)
 })
 
 // on selectione les fleches
@@ -25,10 +30,6 @@ arrowLeft.addEventListener("click", prevSlide)
 let arrowRight = document.querySelector(".arrow_right")
 arrowRight.addEventListener("click", nextSlide)
 
-//reinicio del index
-let slideIndex = 0
-//reinicio du delay por setTimeout
-let autoShowIndex
 
 function nextSlide() {
     showSlide(slideIndex + 1)
@@ -40,6 +41,11 @@ function prevSlide() {
 
 function nextDot () {
 }
+
+//reinicio del index
+let slideIndex = 0
+//reinicio du delay por setTimeout
+let autoShowIndex
 
 // Fonction pour afficher la diapositive correspondant à l'index 
 function showSlide(index) {
@@ -63,6 +69,31 @@ function showSlide(index) {
 
     // Afficher l'image correspondante
     slides[slideIndex].style.display = "block";
+
+
+    //on va faire de la meme maniere que le slides mais avec les textes
+    const text = document.querySelectorAll('.text')
+    const totalSlideText = slides.length
+
+    //gestion de limites de l'index du texte
+    if (index >= totalSlideText) {
+        slideIndex = 0
+    } else if (index < 0) {
+        slideIndex = totalSlideText - 1
+    } else {
+        slideIndex = index
+    }
+    
+    //on va declarer une nouvelle variable 
+    //avec le meme parametre que les images
+    let textIndex = slideIndex
+
+    //on masque les texte 
+    text.forEach(text => {
+        text.style.display = "none"
+    })
+    //on remer le texte
+    text[textIndex].style.display = "block"
 
     //on selectione toutes les dots et on 
     //ajoute les Dots_selected
